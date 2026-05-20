@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0f766e">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Scandi Trip">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="apple-touch-icon" href="/icons/icon-192.png">
+  <title>Scandi Trip Countdown</title>
+  <style>
+    :root {
+      --sweden-blue: #005293;
+      --sweden-yellow: #fecb00;
+      --denmark-red: #c8102e;
+      --teal: #0f766e;
+      --border: rgba(255,255,255,.22);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: white;
+      min-height: 100svh;
+      background:
+        radial-gradient(circle at top left, rgba(254,203,0,.30), transparent 28%),
+        radial-gradient(circle at top right, rgba(200,16,46,.35), transparent 30%),
+        linear-gradient(155deg, #003049 0%, #005293 35%, #0f766e 65%, #1f2937 100%);
+      padding: 20px;
+    }
+    .app { width: 100%; max-width: 860px; margin: 0 auto; padding-bottom: 34px; }
+    .hero, .section {
+      background: rgba(255,255,255,.12);
+      border: 1px solid var(--border);
+      box-shadow: 0 28px 80px rgba(0,0,0,.28);
+      backdrop-filter: blur(16px);
+    }
+    .hero { position: relative; overflow: hidden; border-radius: 32px; padding: 24px; margin-bottom: 16px; }
+    .flag-ribbon { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 18px; }
+    .mini-flag { height: 54px; border-radius: 16px; overflow: hidden; border: 1px solid rgba(255,255,255,.25); position: relative; }
+    .sweden { background: var(--sweden-blue); }
+    .sweden::before { content: ""; position: absolute; left: 28%; top: 0; width: 11%; height: 100%; background: var(--sweden-yellow); }
+    .sweden::after { content: ""; position: absolute; left: 0; top: 40%; width: 100%; height: 20%; background: var(--sweden-yellow); }
+    .denmark { background: var(--denmark-red); }
+    .denmark::before { content: ""; position: absolute; left: 30%; top: 0; width: 10%; height: 100%; background: white; }
+    .denmark::after { content: ""; position: absolute; left: 0; top: 43%; width: 100%; height: 18%; background: white; }
+    .eyebrow { opacity: .85; font-size: 14px; margin: 0 0 8px; letter-spacing: .02em; text-transform: uppercase; font-weight: 800; }
+    h1 { font-size: 40px; line-height: .95; margin: 0 0 10px; letter-spacing: -.045em; }
+    .sub { opacity: .88; font-size: 16px; line-height: 1.4; margin: 0; }
+    .countdown { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 20px; }
+    .count-box { background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.20); border-radius: 20px; padding: 14px 8px; text-align: center; }
+    .count-num { font-size: 34px; font-weight: 900; letter-spacing: -.04em; }
+    .count-label { font-size: 12px; opacity: .78; font-weight: 700; text-transform: uppercase; }
+    .section { border-radius: 26px; padding: 18px; margin-top: 14px; }
+    .section-header { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; margin-bottom: 12px; }
+    h2 { margin: 0; font-size: 24px; letter-spacing: -.025em; }
+    .updated { font-size: 12px; opacity: .78; white-space: nowrap; }
+    button { width: 100%; border: 0; border-radius: 18px; padding: 16px 18px; margin-top: 16px; font-weight: 900; font-size: 17px; background: #fecb00; color: #172554; cursor: pointer; }
+    button:disabled { opacity: .65; }
+    .weather-grid, .city-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
+    @media (min-width: 720px) { .weather-grid, .city-grid { grid-template-columns: 1fr 1fr; } }
+    .weather-card, .activity-card, .link-card { background: rgba(255,255,255,.13); border: 1px solid rgba(255,255,255,.18); border-radius: 20px; padding: 16px; }
+    .city-name { font-weight: 900; font-size: 20px; margin-bottom: 8px; }
+    .temp { font-size: 44px; font-weight: 950; letter-spacing: -.05em; margin: 2px 0; }
+    .weather-meta, .activity-meta { opacity: .82; font-size: 13px; line-height: 1.35; }
+    .activity-grid { display: grid; grid-template-columns: 1fr; gap: 10px; margin-top: 10px; }
+    .link-card { display: block; text-decoration: none; color: white; }
+    .link-card strong { display: block; font-size: 16px; margin-bottom: 5px; }
+    .badge { display: inline-block; padding: 5px 9px; border-radius: 999px; background: rgba(254,203,0,.20); color: #fde68a; border: 1px solid rgba(254,203,0,.35); font-weight: 800; font-size: 12px; margin-bottom: 8px; }
+    .muted { opacity: .72; font-size: 12px; line-height: 1.4; margin-top: 14px; }
+    .error { color: #fecaca; font-weight: 700; }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <section class="hero">
+      <div class="flag-ribbon">
+        <div class="mini-flag sweden"></div>
+        <div class="mini-flag denmark"></div>
+      </div>
+      <p class="eyebrow">Family Scandinavia countdown</p>
+      <h1>Stockholm + Copenhagen</h1>
+      <p class="sub">Countdown to departure on <strong>August 10</strong>, live weather, and date-aware activity links for your trip.</p>
+      <div class="countdown" id="countdown"></div>
+      <button id="refreshButton">Refresh Weather + Activities</button>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <h2>Weather Forecast</h2>
+        <div class="updated" id="weatherUpdated">—</div>
+      </div>
+      <div class="weather-grid" id="weatherGrid"></div>
+      <div class="muted">Weather uses current forecast data from Open-Meteo and updates when you refresh.</div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <h2>Trip Activity Finder</h2>
+        <div class="updated" id="activityUpdated">—</div>
+      </div>
+      <div class="city-grid" id="activityGrid"></div>
+      <div class="muted">Activity links are date-aware searches and official tourism/event sources for your exact trip windows.</div>
+    </section>
+  </main>
+  <script src="/app.js?v=1"></script>
+</body>
+</html>
